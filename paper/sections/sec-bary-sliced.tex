@@ -1,0 +1,167 @@
+% !TEX encoding = ISO-8859-16
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Sliced Wasserstein Barycenter}
+\label{sec-sliced-wass}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Sliced Wasserstein Barycenter}
+
+Following~\cite{Rabin_ssvm11} which defines a sliced barycenter of discrete measures, we consider here a similar sliced variational formulation for arbitrary measures. We first define the sliced Wasserstein distance as
+\begin{align}\label{eq-swass-dist}
+	\SWass{\RR^d}(\mu_1,\mu_2)^2 &= \Wass{\Om^d}( R \mu_1, R \mu_2 )^2 \\
+	 &= \int_{\Sph} \Wass\RR( P_\th \sharp \mu_1, P_\th \sharp \mu_2 )^2  \d \th.
+\end{align}
+where we remind that $\d \th$ is the uniform measure on $\Sph$, normalized so that $\int_{\Sph} \d \th = 1$.
+ 
+\begin{defn}[Sliced Wasserstein Barycenter]\label{defn-sliced-baryc} Given $\la \in \La_I$ and $(\mu_i)_{i \in I} \in \Mm_1^+(\RR^d)^I$ we define
+\eql{\label{eq-sliced-optim}
+	\Bary{\RR^d}^S(\mu_i,\la_i)_{i \in I} = 
+	  \uargmin{\mu \in \Mm_1^+(\RR^d)}
+		\sum_i \la_i \SWass{\RR^d}( \mu_i, \mu )^2.
+}
+\end{defn}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Comparison of Radon and Sliced Barycenters}
+
+The following proposition compares the variational formulations of the Radon and sliced Wasserstein barycenters.
+
+\begin{prop}\label{prop-comparison-bary}
+	Denoting 
+	\eql{\label{eq-dfn-EE}
+		\Ee(\nu) = \sum_{i \in I} \la_i \Wass{\Om^d}( R \mu_i, \nu )^2, 
+	}
+	one has
+	\begin{align}
+		\label{eq-comparison-1}
+		\Bary{\RR^d}^R(\mu_i,\la_i)_{i \in I} = R^+  \uargmin{\bar\Mm_1^+(\Om^d) \qquad } &\Ee, \\
+		\label{eq-comparison-2}
+		\Bary{\RR^d}^S(\mu_i,\la_i)_{i \in I} = R^+ \uargmin{\bar\Mm_1^+(\Om^d) \cap \Im(R) } &\Ee.
+	\end{align}
+\end{prop}
+
+The proof of this proposition, as well as all the other proofs of this section, can be found in Appendix~\ref{sec-appendix-sliced}. The following proposition shows that the sliced barycenter enjoys the same invariance properties as the Radon barycenter.
+
+\begin{prop}\label{prop-invariance-Sliced}
+	Proposition~\ref{prop-invariance-W} holds when replacing $\Bary{\RR^d}^W$ by $\Bary{\RR^d}^S$.
+\end{prop}
+
+
+\begin{prop}\label{prop-invariance-Sliced-bis}
+	Proposition~\ref{prop-invariance-W-bis} holds when replacing $\Bary{\RR^d}^W$ by $\Bary{\RR^d}^S$.
+\end{prop}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Sliced Barycenter with Lagrangian Discretization}
+\label{subsec-algorithm-lagrangian}
+
+
+Directly solving the variational problem~\eqref{eq-sliced-optim} is in\-trac\-ta\-ble for any realistic application. Indeed, even for discrete input measures, the barycenter might not be in general discrete. Instead, we consider a numerical scheme that performs the optimization of~\eqref{eq-sliced-optim} over the (non-convex) set of discrete sums of Diracs. We parameterize a discrete measure with equal weights as
+\eql{\label{eq-lagrangian-discr}
+	\mu_X = \frac{1}{N}\sum_{k=1}^N \de_{X_k}
+} 
+where $X = (X_k)_{k=1}^N \in \RR^{d \times N}$ and $X_k \in \RR^d$.
+
+Given a set $(\mu_i)_{i \in I}$ of discrete input measures, i.e. $\mu_i = \mu_{X^{(i)}}$ for $X^{(i)} \in \RR^{d \times N}$, we consider the following non-linear program to approximate solutions of~\eqref{eq-sliced-optim}
+\eql{\label{eq-non-convx-pointclouds}
+	\umin{X \in \RR^{d \times N}}  \left\{ \Ee(X) = \sum_{i \in I}
+			\frac{\la_i}{2} \SWass{\RR^d}( \mu_{X^{(i)}}, \mu_X )^2 \right\}.
+} 
+The following theorem shows that this energy is smooth, which contrasts with the same energy defined with the usual Wasserstein distance $\Wass{\RR^d}$ instead of $\SWass{\RR^d}$.
+
+\begin{thm}\label{thm-sliced-energy-grad}
+	$\Ee : \RR^{d\times N} \rightarrow \RR$ is a $\Cc^1$ function with a uniformly Lipschtiz gradient. Its gradient at $X \in \RR^{d \times N}$ with distinct points reads
+	\eql{\label{eq-grad-noncvx}
+		\nabla \Ee(X) = \sum_{i \in I} \la_i \int_{\Sph} (X_\th  - X^{(i)}_\th \circ \si_{ X^{(i)}_\th } \circ \si_{X_\th} ) \th \, \d \th 
+	}
+	where $X_\th = ( \dotp{X_i}{\th} )_{i=1}^N \in \RR^N$
+	and for any $Y \in \RR^N$, $\si_Y$ is any permutation (which is not necessarily unique) of $\{1,\ldots,N\}$ which orders the values in $Y$, i.e.
+	\eq{
+		Y_{\si(1)} \leq Y_{\si(2)} \leq \ldots \leq Y_{\si(N)}. 
+	}
+\end{thm}
+
+The proof of this theorem can be found in Appendix~\ref{sec-proof-thm-sliced}. Problem~\eqref{eq-non-convx-pointclouds} is non-convex, and one computes a stationary point (in practice a local minimum) through a gradient descent
+\eql{\label{eq-grad-desc-sliced}
+	\iiter{X} = \iter{X} - \tau_\iterInd \nabla \Ee(\iter{X})
+}
+with a given initialization $\iterInit{X}$, and where $\nabla \Ee(\iter{X})$ is computed using~\eqref{eq-grad-noncvx}, and $\tau_\iterInd$ is a gradient step size. Choosing $0 < \tau < \tau_\iterInd < 2/\kappa$ ensures convergence, where $\kappa>0$ is the uniform Lipschitz constant of $\nabla \Ee$. Note that the constant $\kappa$ depends on the input point clouds $(X^{(i)})_{i \in I}$, and we found in practice that $\kappa$ is close to 1, see also the proof in Appendix~\ref{sec-proof-thm-sliced} for more insights about this.
+
+In order to implement numerically the iterations~\eqref{eq-grad-desc-sliced}, one discretizes the set of directions. It corresponds to the use of a finite set $\Th \subset \Sph$, and a minimization of the energy 
+\eq{
+%	\umin{X \in \RR^{d \times N}} 
+				 \Ee_\Th(X) = \sum_{i \in I} \frac{\la_i}{2 {|\Th|}} \sum_{\th \in \Th} \Wass{\RR}( P_\th \sharp \mu_{X^{(i)}}, P_\th \sharp \mu_X )^2.
+} 
+While this function is not $\Cc^1$ on the whole space $\RR^{d \times N}$, it is differentiable (and in fact quadratic) almost everywhere. At a point where it is differentiable, one can use formula~\eqref{eq-grad-noncvx}, where the integral $\int_{\Sph}$ is replaced by a finite sum $\sum_\Th$. The gradient descent~\eqref{eq-grad-desc-sliced} is advantageously replaced by a Newton descent
+\eql{\label{eq-grad-desc-sliced_newton}
+	\iiter{X} = \iter{X} - H_\iterInd^{-1} \nabla \Ee(\iter{X})
+}
+where 
+\eq{
+	H_\iterInd = \nabla^2 \Ee(\iter{X}) = \frac{1}{|\Th|} \sum_{\th \in \Theta} \theta \theta^* \in \RR^{d \times d}
+}
+is the Hessian matrix of $\Ee$ (which thus does not depends on $\iterInd$). In 2-D, we use a set of $|\Th|$ directions equi-spaced on the circle, in which case $H_\iterInd = \frac{1}{2} \Id_{2 \times 2}$. In higher dimensions $d>2$, we use random directions drawn uniformly on $\Sph$, and one can show that $H_\iterInd$ converges almost surely to $\frac{1}{d} \Id_{d \times d}$, so that in practice one can use this matrix in place of $H_\iterInd$ in~\eqref{eq-grad-desc-sliced_newton}. Although we observed that this approximated Newton scheme works well in our numerical simulation, it is not possible to give theoretical claim about its convergence speed, since the underlying function is not twice differentiable, and the Hessian matrix is computed with some error when using $\frac{1}{d} \Id_{d \times d}$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Sliced Transport with Lagrangian Discretization}
+\label{subsec-sliced-assignement}
+
+Beside the computation of barycenters, the sliced Wasserstein distance~\eqref{eq-swass-dist} can be used to approximate the transportation map from a given density $\mu_{\iterInit{X}}$ toward a second density $\mu_{Y}$, for $(\iterInit{X},Y) \in (\RR^{d \times N})^2$. This application was initially introduced by Marc Bernot and first presented in ~\cite{Rabin_ssvm11} for applications to texture synthesis.
+
+We obtain this map by following the descent flow of the energy
+\eq{
+	\foralls X \in \RR^{d \times N}, \quad
+	 \Ff_{Y}(X) = \frac{1}{2} \SWass{\RR^d}(\mu_{X},\mu_{Y})^2
+}	
+initialized from $\iterInit{X}$, which can be formally written as the flow $t \mapsto X_t \in \RR^{d \times N}$ defined by the PDE
+\eql{\label{eq-flow-swass}
+	\foralls t>0, \quad
+	\pd{X_t}{t} = - \nabla \Ff_{Y}(X_t)
+}
+with $X_0=\iterInit{X}$ at time $t=0$.  Note that the gradient of $\Ff_Y$ is given by Theorem~\ref{thm-sliced-energy-grad} in the case of a single input density, i.e., $|I|=1$.
+
+In order to numerically approximate  the flow~\eqref{eq-flow-swass}, we discretize the time dimension using an explicit Euler scheme (which corresponds to a gradient descent) and the set of directions used in the definition of $\SWass{\RR^d}$. In order for the flow to converge to a stationary point of $\Ff_{Y}$, we use a stochastic gradient descent. At each iteration $\iterInd$, we consider a finite number of orientations $\Th_\iterInd \subset \Sph$ drawn uniformly at random. Defining the partial energy
+\eq{
+	 \Ff_Y^{\iterInd}(X) = \frac{1}{|\Th_\iterInd|} \sum_{\th \in \Th_k} \Wass{\RR}( P_\th \sharp \mu_{X^{(i)}}, P_\th \sharp \mu_X )^2, 
+}
+one step of the stochastic gradient descent is defined as
+\eql{\label{eq-stoch-grad-desc}
+	\iiter{X} = \iter{X} - \tau_\iterInd \nabla \Ff_Y^{\iterInd}(\iter{X})
+}
+where $\tau_\iterInd>0$ is a step size. 
+
+We denote 
+\eql{\label{eq-lim-xstar}
+	X^\star \in \lim_{\iterInd \rightarrow +\infty} \iter{X}
+}
+any limiting point cloud in the adherence of the sequence of iterates. Since this sequence is bounded by coercivity of $\Ff_X$, such a point cloud always exists.  
+
+Note that the color transfer method introduced by Piti\'{e} et al.~\cite{pitie2005n} corresponds to the iterations~\eqref{eq-stoch-grad-desc} when using $|\Th_\iterInd|=3$ randomized orthogonal directions at each step. 
+Figure~\ref{fig:interp_stochastic} in the next section shows that using more directions improves the visual quality of the result. 
+
+Experimentally, as detailed in Section~\ref{subsec-num-comparison}, we make the following crucial observations.
+\begin{rem}
+The step size $\tau_\iterInd$ can be set constant, i.e. $\forall \iterInd, \tau_\iterInd=\tau$, and the iterates always converge toward a local minimum of $\Ff_Y$. A heuristic explanation for this observed property is that, at a global minimum $X$ of $\Ee_Y(X)$, for all $\th \in \Sph$, each term $\Wass{\RR}( P_\th \sharp \mu_{X^{(i)}}, P_\th \sharp \mu_X )^2$ also reaches its global minimum. For a convex energy, this property is known to imply convergence of stochastic gradient descent with a fixed step size, see~\cite{Solodov-incremental}. 
+\end{rem}
+
+\begin{rem}
+All local minima of $\Ff_{Y}$ appear to be global minima. Although we have no formal proof of this phenomenon, it is illustrated on measures made of two Diracs in Section~\ref{subsec-twodiracs}. This implies that $X^\star$ is a global minimum of $\Ff_Y$, hence $\Ff_Y(X^\star)=0$ and 
+\eql{\label{eq-prop-conv}
+	\mu_{X^\star} = \mu_Y
+}
+i.e. the measure $\mu_{\iter{X}}$ converges (in the weak-* topology of Radon measures) toward $\mu_Y$.
+\end{rem}
+
+
+The sliced transport map $T^S : \RR^d \mapsto \RR^d$ is defined on the support of $\mu_{\iterInit{X}}$ as 
+\eql{\label{eq-T-sliced}
+	\foralls k \in \{1,\ldots,N\}, \quad
+	T^S( \iterInit{X}_k )  = X^\star_k.
+}
+The (empirically observed) property~\eqref{eq-prop-conv} ensures that $T^S$ satisfies $T^S \sharp \mu_{\iterInit{X}} = \mu_Y$, i.e., $T^S$ is a valid transport plan between the measures. 

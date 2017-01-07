@@ -1,0 +1,130 @@
+% !TEX encoding = ISO-8859-16
+\newcommand{\tGg}{{\tilde \Gg}}
+\newcommand{\DiscMeasX}[2]{ {m_{#1}^{#2}} }
+
+%% In the following, we consider the special case $d=2$, investigated in Sec.~\ref{sec:results}, without loss of generality. => pas la peine, ce n'est pas juste pour d=2
+
+
+%%%
+\paragraph{Discretization grids.}
+
+We consider here an Eulerian discretization of the Radon barycenter. This means that the considered measures in $\RR^d$ are assumed to be discrete measures supported on the same grid of $N = n^d$ points in $\RR^d$ 
+\eq{
+	\Gg = \{-n/2+1,\ldots,n/2\}^d
+}
+(we assume for simplicity that $n$ is even). Similarly, measures on $\Om^d$ are also supported on a fixed grid
+\eq{
+	\tGg = \Tt \times \Th = 
+	\enscond{ (t,\th) }{ t \in \Tt \qandq \th \in \Th}
+} 
+where $\Tt \subset \RR$ and $\Th \subset (-\pi,\pi]$ are finite sets.
+
+%%%
+\paragraph{Measures on grids. }
+
+If $X$ is a discrete set (which in the following will be either $\Gg$, $\tGg$ or $\Tt$), we denote
+\eql{\label{eq-gridding}
+	\foralls a \in \RR^X, \quad \DiscMeasX{a}{X} = \sum_{x \in X} a_x \de_x \in \Mm_1^+(X).
+}
+Following the notation introduced in~\eqref{eq-defn-simplex}, we denote $\La_X$ the set of normalized vectors
+\eq{
+	\La_X = \enscond{ a \in \RR^X }{ \foralls x \in X, a_x \geq 0 \qandq \sum_{x \in X} a_x = 1 }.
+}
+One thus has for $a \in \La_X$, $\DiscMeasX{a}{X} \in \Mm_1^+(X)$. 
+
+%%%
+\paragraph{Discretized Wasserstein barycenter on $\Tt$. }
+
+We first define approximate 1-D Wasserstein barycenters with an Eulerian discretization. The cumulative sum of $a \in \La_{\Tt}$ is 
+\eq{
+	\foralls t \in \Tt, \quad
+	I( a )_t = \sum_{t' \leq t} a_{t'}.
+}
+The cumulative distribution is defined by approximating with sums and interpolation the formula~\eqref{eq-cumulative-defn}, for $\mu = \DiscMeasX{a}{\Tt} \in \Mm_1^+(\RR)$ 
+\eq{
+	\foralls t \in \RR, \quad \bar C_{ \mu }(t) = \text{Interp}( I(a) )( t ).
+}	
+Here, $\text{Interp} : \RR^{\Tt} \rightarrow \Cont{\RR}$ is an interpolation operator, that we take in the following to be piecewise linear.
+We then define the approximate barycenter on $\Tt$ of measures $( \mu_i = \DiscMeasX{a_i}{\Tt} )_{i \in I} \in \Mm_1^+(\RR)^I$ denoted
+\eq{
+	\Bary{\Tt}( \mu_i,\la_i )_{i \in I} = \DiscMeasX{a^\star}{\Tt}
+}
+by applying formula~\eqref{eq-bary-1d-formula-deriv} on the grid $\Tt$, i.e.
+\eq{
+	\qwhereq
+	\foralls t \in \Tt, \quad
+	a^\star_t =  
+	\frac{\d}{\d x}\pa{ \sum_{i \in I} \la_i \bar C_{\mu_i}^+(x) }^+( t ).
+}
+In practice, this formula is computed accurately by computing the inverse cumulative function on a uniform grid of $[0,1]$ of the same granularity as the spatial discretization, and computing the derivative with finite differences on this grid. 
+
+%%%
+\paragraph{Discretized Wasserstein barycenter on $\tilde\Gg$. }
+
+One computes Eulerian barycenters on $\Om^d$ by computing 1-D barycenters of the marginals restricted to the grid $\tilde\Gg$. Indeed, we have for $\be \in \La_{\tGg}$, denoting $\nu = \DiscMeasX{\be}{\tGg}$, the disintegration formula on the grid
+\eq{
+	\foralls \th \in \Th, \:
+	\nu^\th =  \DiscMeasX{\be_{\cdot,\th}}{\Tt}
+	\qwhereq
+	\be_{\cdot,\th} = ( \be_{(t,\th)} )_{t \in \Tt} \in \RR^{\Tt}.
+}
+The approximate barycenter on $\tGg$ of measures $( \nu_i = \DiscMeasX{\be_i}{\tGg} )_{i \in I} \in \bar\Mm_1^+(\Om^d)^I$ is thus
+\eq{
+	\Bary{\tGg}( \nu_i,\la_i )_{i \in I} = \DiscMeasX{\be^\star}{\tGg} = \nu^\star
+}
+\eq{
+	\qwhereq
+	\foralls \th \in \Th, \quad
+	 (\nu^\star)^\th = 
+	 \Bary{\Tt}( \nu_i^\th,\la_i )_{i \in I}.
+}
+
+%%%
+\paragraph{Discrete Radon transform}
+
+In the following, we investigate the use of the Fast Slant Stack Radon transform~\cite{Averbuch-slantstack}. It has the property to faithfully approximate the geometry of the Radon transform, i.e., it exactly computes integrals over 1-D rays for band limited functions. Note that other discretizations could be used as well, see for instance~\cite{Brady-Radon}. In the case of a 2-D Fast Slant Stack transform, the sampling grid $\tGg$ is recto-polar (so that $\tilde\Gg$ is in fact not an exactly equi-spaced grid, but we ignore this technicality here) and $|\Tt| = n$, $|\Th|=4n$. This Fast Slant Stack implements both the computation of the Radon transform and its adjoint with fast algorithms. These algorithms assume that the data is sampled from a band limited function, faithfully integrated using Shannon interpolation. This can thus result in negative values in the Radon transform, and in turn necessitates a careful implementation of the barycenter computation. 
+
+We thus assume that we have at our disposal a discrete Radon transform (in our case the Fast Slant Stack), which is a linear map $\tilde R : \RR^\Gg \mapsto \RR^{\tGg}$, and also have access to its adjoint $\tilde R^* : \RR^{\tGg} \mapsto \RR^{\Gg}$. The Moore-Penrose pseudo-inverse 
+\eq{
+	{\tilde R}^+(\be) = ({\tilde R}^* {\tilde R})^{-1}{\tilde R}^*(\be) = 
+	\uargmin{\al} \norm{{\tilde R} \al - \be} 
+} 
+is usually computed by a conjugate gradient descent. As reported in~\cite{Averbuch-slantstack}, it is possible to introduce a simple pre-con\-di\-tion\-ner for the Fast Slant Stack inversion that accelerates convergence of the conjugate descent, and is a major computational advantage for this approach.
+
+This discrete Radon transform allows one to approximate the Radon transform of measures defined in~\eqref{eq-radon-measure} as
+\eq{
+	\foralls \al \in \RR^{\Gg}, \quad
+	R( \DiscMeasX{ \al }{\Gg} ) \approx \DiscMeasX{ \tilde R(\al) }{\tGg}.
+}
+We leave for future work the theoretical analysis of this approximation when $\DiscMeasX{ \al }{\Gg} \rightarrow \mu$ and $(N,P)$ increases toward $+\infty$. 
+
+% Although we do not give a more precise statement about this approximation, it should be understood typically as a weak-convergence of measures (or equivalently Wasserstein-distance convergence) of $\DiscMeasX{ \tilde R(\al) }{\tGg}$ toward $R(\mu)$ when $\DiscMeasX{ \al }{\Gg} \rightarrow \mu$ and $(N,P)$ increases toward $+\infty$. 
+
+%%%
+\paragraph{Approximated Radon Barycenters}
+
+Making use of these discrete constructions (barycenters on $\tGg$ and Radon transform on $\Gg$), we are now ready to define the approximate Eulerian barycenter of measures supported on $\Gg$. 
+We are thus given as input Eulerian discretized densities
+\eq{
+	\foralls i \in I, \quad 
+	\mu_i = \DiscMeasX{\al_i}{\Gg}
+	\qwhereq
+	\al_i \in \RR^{\Gg}. 
+}
+The algorithm then computes the discretized Radon transform 
+\eq{
+	\foralls i \in I, \quad 
+	\be_i = \tilde R( \al_i ) \in \RR^{\tGg}. 
+}
+For any $\la \in \La_I$, our Eulerian discretized Radon barycenter
+\eq{
+	\Bary{\Gg}^R( \mu_i, \la_i )_{i \in I} = \DiscMeasX{\al^\star}{\Gg}
+	\qwhereq
+	\choice{
+		\al^\star = \tilde R^+ \be^\star, \\
+		\DiscMeasX{\be^\star}{\tGg} = \Bary{\tGg}( \DiscMeasX{\be_i}{\tGg}, \la_i )_{i \in I}.
+	} 
+}
+This barycenter is hence intended to approximate an element of $\Bary{\RR^d}^R(\mu_i)_{i \in I}$, with the constraint of being supported on $\Gg$. 
+
+

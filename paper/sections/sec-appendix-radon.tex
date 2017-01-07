@@ -1,0 +1,155 @@
+\section{Proofs of Section~\ref{sec-bary-radon}}
+\label{sec-appendix-radon}
+
+\begin{proof}[Proof of Proposition~\ref{prop-radon-pushforward}]
+For all $g \in \Cont{\Om^d}$, one has 
+\begin{align*}
+&\int_{\Sph}\int_{\RR} g(t, \th) \d(R(\mu)^\th)(t) \d\th = \int_{\Om^d}g(t, \th)\d(R(\mu))(t, \th) \\
+	&\qquad = \int_{\RR^d}(R^*g)(x)\d\mu(x) \\
+	&\qquad = \int_{\RR^d}\int_{\Sph} g(P_\th(x),\th) \d\th \d\mu(x)\\
+	&\qquad = \int_{\Sph} \int_{\RR} g(y,\th) \d(P_\th \sharp \mu)(y) \d\th.
+\end{align*}
+\end{proof}
+
+
+\begin{proof}[Proof of Lemma~\ref{lem-invariances}]	
+		%%%%% 
+		\if 0 %%% ALTERNATE %%%
+		\noindent\textit{Proof of~\eqref{propR}:} 
+		Using Proposition~\ref{prop-radon-pushforward}, one has, for all $\th \in \Sph$, 
+		\eq{
+			R( \phi_{s,u} \sharp \mu )^\th = P_\th \sharp (\phi_{s,u} \sharp \mu) 
+			= (P_\th \circ \phi_{s,u}) \sharp \mu.
+		}
+		Notice that
+		\eq{
+			P_\th \circ \phi_{s,u}(x) = 
+			s\dotp{x}{\th} + \dotp{u}{\th} = 
+			\phi_{s,\dotp{u}{\th}} \circ P_\th.
+		}
+		where here we used $\phi_{s,\dotp{u}{\th}} : \RR \rightarrow \RR$.
+		Hence
+		\eq{
+			R( \phi_{s,u} \sharp \mu )^\th = 
+			\phi_{s,\dotp{u}{\th}} \sharp (P_\th \sharp \mu) = 
+			\phi_{s,\dotp{u}{\th}} \sharp R(\mu)^\th
+		}
+		which is equivalent to~\eqref{propR}.		\\
+		\fi
+		%%%%%
+		\noindent\textit{Proof of~\eqref{propR}:} 
+		For all $g \in \Cont{\Om^d}$, one has 
+		\begin{align*}
+			\int_{\RR^d} g \d[ R (\phi_{s,u} \sharp \mu)] 
+				&= \int_{\RR^d} R^*(g) \d[ \phi_{s,u} \sharp \mu] \\
+%				& = \int_{\RR^d} \int_{\Sph} g(\dotp{x}{\th},\th) \d\th \d[ \phi_{s,u} \sharp \mu](x) \\
+				&= \int_{\RR^d} \int_{\Sph} g(\dotp{sx+u}{\th},\th) \d\th\d\mu(x) \\
+%				&= \int_{\RR^d} \int_{\Sph} g(s\dotp{x}{\th}+\dotp{u}{\th},\th) \d\th\d\mu(x) \\
+				&= \int_{\RR^d} \int_{\Sph} (g \circ \psi_{s,u})(\dotp{x}{\th},\th) \d\th\d\mu(x) \\
+%				&= \int_{\RR^d} R^* (g \circ \psi_{s,u}) \d\mu(x) \\
+				&= \int_{\RR^d} (g \circ \psi_{s,u}) \d[R(\mu)] \\
+				& = \int_{\RR^d} g \d[ \psi_{s,u} \sharp R(\mu)]
+		\end{align*}		
+		%%%%%%
+		\if 0 %%% WRONG %%%
+		for all $g \in \Cont{\Om^d}$, one has 
+		\begin{align*}
+		& \int_{\Om^d} g(t,\th) \d(R(\phi_{s,u}\sharp \mu))  = \int_{\RR^d}(R^* g)(s x + u) \d\mu(x) \\
+			& \quad = \int_{\RR^d} \int_{\dotp{s x + u}{\th}=t} g(t, \th) \d t \d\th \d\mu(x) \\
+			& \quad = \int_{\RR^d}\int_{\dotp{x}{\th}=\frac{t-\dotp{u}{\th}}{s}} g(t, \th) \d t \d\th \d\mu(x)\\
+			& \quad = \int_{\RR^d}\int_{\dotp{x}{\th}=t'} g(s t'+\dotp{u}{\th}, \th) s \d t' \d\th \d\mu(x)
+		\end{align*}
+		\fi
+		%%%%%
+		\if 0
+		\noindent\textit{Proof of~\eqref{propRm}:} 			
+		Using~\eqref{eq-pushfwd-density}, and applying~\eqref{propR} to a measure $\d\mu(x) = f(x) \d x$ with density $f$, one has the following invariance of the Radon transform of function 
+		\eq{
+		\begin{align*}
+			R( f \circ \phi_{s,u} ) &= s^{1-d} R(f) \circ \psi_{s,u}\\
+			& = 
+		\end{align*}		
+		}
+		Thus for all $f \in \Cont{\RR^d}$, one has
+		\begin{align*}
+		\int_{\RR^d} f \d[R^*(\psi_{s,u}\sharp \nu)]
+			& = \int_{\Om^d} (R f) \circ \psi_{s,u} \d\nu \\
+			& = s^{d-1} \int_{\Om^d} R (f \circ \phi_{s,u} ) \d\nu \\
+			& = s^{d-1} \int_{\Om^d} f \circ \phi_{s,u}  \d (R^*\nu) \\
+			& = \int_{\Om^d} f   \d[s^{d-1} \cdot \phi_{s,u}\sharp  R^*(\nu)]
+		\end{align*}
+		\fi 		
+		%%%%%%%
+		\noindent\textit{Proof of \eqref{propRp}}: 		
+		First we notice, using \eqref{eq-radon}, that 
+			\begin{align*} 
+				& R( f \circ \phi_{s,u} )(t,\th) 
+				= \int_{\R^{d-1} } f\pa{ s(t\theta + U_\th \ga) + u } \d\ga \\
+				& \qquad = \int_{\R^{d-1} } f\pa{ st\th + U_\th s\ga + \dotp{u}{\th}\th + U_\th(U_\th)^{T}u } \d\ga \\
+				& \qquad = \int_{\R^{d-1} } f\pa{ (st+\dotp{u}{\th})\th + U_\th (s\ga + (U_\th)^{T}u)} \d\ga \\
+				& \qquad = s^{1-d}  \int_{\R^{d-1} } f\pa{ \psi_{s,u} (t,\th) \th + U_\th \ga' } \d \ga'
+			%		= s^{1-d} R f (t',\th)\\
+			%	& \qquad = s^{1-d} R(f) \circ \psi_{s,u} (t,\th).
+			\end{align*}
+			which proves
+			\eql{\label{eq-invariance-R}
+				R( f \circ \phi_{s,u} ) = s^{1-d} R(f) \circ \psi_{s,u}
+			}
+			%%% 
+		\if  0 %% OLD
+			Note that using~\eqref{eq-pushfwd-density}, and applying~\eqref{propR} to a measure $\d\mu(x) = f(x) \d x$ with density $f$, one has the following invariance of the Radon transform of function 
+			\eql{\label{eq-invariance-R}
+				R( f \circ \phi_{s,u} ) = s^{1-d} R(f) \circ \psi_{s,u}.
+			}		
+		\fi %%%
+			We write $H = (R^*R)^{-1}$ the filtering operator with kernel $h^+$. One has, for smooth functions $f \in \Ss(\RR^d)$, denoting $\Ff(f)=\hat f$, 
+			\begin{align*}
+				\Ff( H(f \circ \phi_{s,u}) ) &= c^{-1}\norm{\om}^{1-d} \hat f(s\om) e^{-\imath \dotp{\om}{u}}, \\
+				\Ff( H(f) \circ \phi_{s,u} ) &= c^{-1}\norm{s\om}^{1-d} \hat f(s\om) e^{-\imath \dotp{\om}{u}}, 
+			\end{align*}
+			and hence
+			\eql{\label{eq-H-invariance}
+				H(f) \circ \phi_{s,u} = 
+				s^{1-d} H(f \circ \phi_{s,u}).
+			}
+			This shows, using~\eqref{eq-invariance-R} and~\eqref{eq-H-invariance} that for all $f \in \Dd(\RR^d)$, 
+			\begin{align*}
+				\int_{\RR^d} f \d[ R^+( \psi_{s,u} \sharp \nu ) ] 
+				&= \int_{\RR^d} (RHf) \circ \psi_{s,u}  \d \nu \\ 
+				&= s^{d-1} \int_{\RR^d} R(H(f)  \circ \phi_{s,u})  \d \nu \\
+				&= \int_{\RR^d} RH(f  \circ \phi_{s,u})  \d \nu \\
+				&= \int_{\RR^d} f  \d[ \phi_{s,u} \sharp  R^+(\nu) ] \\
+			\end{align*}
+		%%%%%%%
+		\noindent\textit{Proof of \eqref{PropRot}}: the proof is similar to the one of~\eqref{propR}.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:InvarianceHolds}]
+		Using Lemma~\ref{lem-invariances}, one has
+		\begin{align*}
+		\Bary{\RR^d}^R(\phi_{s,u} \sharp \mu_i,\la_i)_{i \in I} 
+			&= R^+ \Bary{\Om^d}^W(R(\phi_{s,u}\sharp \mu_i), \la_i)_{i \in I}\\
+			&= R^+ \Bary{\Om^d}^W(\psi_{s,u}\sharp (R(\mu_i)), \la_i)_{i \in I}\\
+			&= R^+ \psi_{s,u} \sharp \Bary{\Om^d}^W(R(\mu_i), \la_i)_{i \in I}\\
+			&= \phi_{s,u} \sharp R^+ \Bary{\Om^d}^W(R(\mu_i), \la_i)_{i \in I}\\
+			&= \phi_{s,u} \sharp \Bary{\RR^d}^R(\mu_i,\la_i)_{i \in I}.
+		\end{align*}
+		which proves~\eqref{eq-prop-inv-1} for $\Bary{\RR^d}^R$.
+		Property~\eqref{eq-prop-inv-rot} for $\Bary{\RR^d}^R$ is proved similarly using~\eqref{PropRot}.
+\end{proof}
+
+
+		
+\begin{proof}[Proof of Proposition~\ref{prop:InvarianceHoldsBis}]
+		One has
+		\begin{align*}
+		\Bary{\RR^d}^R(\phi_{s_i,u_i} \sharp \mu,\la_i)_{i \in I} 
+			&= R^+ \Bary{\Om^d}^W(R(\phi_{s_i,u_i}\sharp \mu), \la_i)_{i \in I}\\
+			&= R^+ \Bary{\Om^d}^W( \psi_{s_i,u_i}\sharp R(\mu), \la_i)_{i \in I}\\
+			&= R^+  \psi_{s^\star,u^\star} \sharp \Bary{\Om^d}^W(R(\mu), \la_i)_{i \in I}\\
+			&= \phi_{s^\star,u^\star} \sharp R^+ \Bary{\Om^d}^W(R(\mu), \la_i)_{i \in I}\\
+			&= \phi_{s^\star,u^\star} \sharp \Bary{\RR^d}^R(\mu,\la_i)_{i \in I}, % \\
+		\end{align*}
+		which proves \eqref{eq-prop-inv-2} for $\Bary{\RR^d}^R$.
+\end{proof}
+

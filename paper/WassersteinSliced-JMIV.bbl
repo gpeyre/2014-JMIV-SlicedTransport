@@ -1,0 +1,171 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{DOI~\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{DOI~\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+
+\bibitem{Carlier_wasserstein_barycenter}
+Agueh, M., Carlier, G.: Barycenters in the wasserstein space.
+\newblock SIAM Journal on Mathematical Analysis \textbf{43}(2), 904--924 (2011)
+
+\bibitem{Averbuch-slantstack}
+{A}verbuch, A., {C}oifman, R., {D}onoho, D., {I}sraeli, M., {S}hkolnisky, Y.,
+  {S}edelnikov, I.: {A} framework for discrete integral transformations:
+  {I}{I}. {T}he 2{D} discrete {R}adon transform.
+\newblock {S}{I}{A}{M} {J}. {S}ci. {C}omput. \textbf{30}(2), 785--803 (2008)
+
+\bibitem{Benamou2000}
+Benamou, J.D., Brenier, Y.: A computational fluid mechanics solution of the
+  monge-kantorovich mass transfer problem.
+\newblock Numerische Mathematik \textbf{84}(3), 375--393 (2000)
+
+\bibitem{Benamou2012}
+Benamou, J.D., Froese, B.D., M., O.A.: Numerical solution of the optimal
+  transportation problem via viscosity solutions for the {M}onge-{A}mpere
+  equation.
+\newblock CoRR \textbf{abs/1208.4873} (2012)
+
+\bibitem{Bertsekas1988}
+Bertsekas, D.: The auction algorithm: A distributed relaxation method for the
+  assignment problem.
+\newblock Annals of Operations Research \textbf{14}, 105--123 (1988)
+
+\bibitem{BigotBarycenter}
+Bigot, J., T., K.: Consistent estimation of a population barycenter in the
+  wasserstein space.
+\newblock Preprint arXiv:1212.2562  (2012)
+
+\bibitem{Boman-Radon}
+Boman, J., Lindskog, F.: Support theorems for the {R}adon transform and
+  {C}ram{\`e}r-{W}old theorems.
+\newblock Journal of Theoretical Probability \textbf{22}(3), 683--710 (2009)
+
+\bibitem{Bonneel-displacement}
+Bonneel, N., {van de Panne}, M., Paris, S., Heidrich, W.: Displacement
+  interpolation using lagrangian mass transport.
+\newblock ACM Transactions on Graphics (SIGGRAPH ASIA'11) \textbf{30}(6) (2011)
+
+\bibitem{Brady-Radon}
+Brady, M.L.: A fast discrete approximation algorithm for the radon transform.
+\newblock Journal of Computing \textbf{27}(1), 107--119 (1998)
+
+\bibitem{CuturiBarycenter}
+Cuturi, M., Doucet, A.: Fast computation of wasserstein barycenters.
+\newblock Preprint arXiv:1212.2562  (2013)
+
+\bibitem{DellacherieBook}
+Dellacherie, C., Meyer, P.A.: Probabilities and Potential.
+\newblock Math. Stud. 29, North Holland, Amsterdam (1978)
+
+\bibitem{Delon-midway}
+Delon, J.: Movie and video scale-time equalization application to flicker
+  reduction.
+\newblock IEEE Transactions on Image Processing \textbf{15}(1), 241--248 (2006)
+
+\bibitem{Desolneux-Moisan-12}
+Desolneux, A., Moisan, L., Ronsin, S.: A compact representation of random phase
+  and {G}aussian textures.
+\newblock In: Proc. the IEEE International Conference on Acoustics, Speech, and
+  Signal Processing (ICASSP), pp. 1381--1384 (2012)
+
+\bibitem{digne-reconstruction}
+Digne, J., Cohen-Steiner, D., Alliez, P., Goes, F., Desbrun, M.:
+  Feature-preserving surface reconstruction and simplification from
+  defect-laden point sets.
+\newblock Journal of Mathematical Imaging and Vision pp. 1--14 (2013)
+
+\bibitem{peyre2013Gaussians}
+Ferradans, S., Xia, G.S., Peyr{\'e}, G., Aujol, J.F.: Optimal transport mixing
+  of gaussian texture models.
+\newblock In: Proc. SSVM'13 (2013)
+
+\bibitem{galerne-ieee}
+Galerne, B., Gousseau, Y., Morel, J.M.: Random phase textures: Theory and
+  synthesis.
+\newblock IEEE Trans. on Image Processing \textbf{20}(1), 257--267 (2011)
+
+\bibitem{GalerneGabor}
+Galerne, B., Lagae, A., Lefebvre, S., Drettakis, G.: Gabor noise by example.
+\newblock ACM Transactions on Graphics (Proceedings of ACM SIGGRAPH 2012)
+  \textbf{31}(4), 73:1--73:9 (2012)
+
+\bibitem{Kuhn-hungarian}
+{H. W. Kuhn}: The {Hungarian} method of solving the assignment problem.
+\newblock Naval Res. Logistics Quart. \textbf{2}, 83--97 (1955)
+
+\bibitem{haker2004}
+Haker, S., Zhu, L., Tannenbaum, A., Angenent, S.: Optimal mass transport for
+  registration and warping.
+\newblock International Journal of Computer Vision \textbf{60}(3), 225--240
+  (2004)
+
+\bibitem{Helgason-radonbook}
+Helgason, S.: The Radon Transform.
+\newblock Birkhauser, Boston (1980)
+
+\bibitem{Kantorovich42}
+Kantorovich, L.: On the transfer of masses (in russian).
+\newblock Doklady Akademii Nauk \textbf{37}(2), 227--229 (1942)
+
+\bibitem{matusik2005texture}
+Matusik, W., Zwicker, M., Durand, F.: Texture design using a simplicial complex
+  of morphable textures.
+\newblock ACM Transactions on Graphics \textbf{24}(3), 787--794 (2005)
+
+\bibitem{mccann1997convexity}
+McCann, R.J.: A convexity principle for interacting gases.
+\newblock advances in mathematics \textbf{128}(1), 153--179 (1997)
+
+\bibitem{Merigot2011}
+M\'erigot, Q.: A multiscale approach to optimal transport.
+\newblock Computer Graphics Forum \textbf{30}(5), 1583--1592 (2011)
+
+\bibitem{FPapPeyOud13}
+Papadakis, N., Peyr{\'e}, G., Oudet, E.: Optimal transport with proximal
+  splitting.
+\newblock SIAM Journal on Imaging Sciences \textbf{7}(1), 212?--238 (2014)
+
+\bibitem{pitie2005n}
+Piti{\'e}, F., Kokaram, A.C., Dahyot, R.: N-dimensional probability density
+  function transfer and its application to color transfer.
+\newblock In: Computer Vision, 2005. ICCV 2005. Tenth IEEE International
+  Conference on, vol.~2, pp. 1434--1439. IEEE (2005)
+
+\bibitem{Rabin_artefact}
+Rabin, J., Delon, J., Gousseau, Y.: Removing artefacts from color and contrast
+  modifications.
+\newblock IEEE Transactions on Image Processing \textbf{20}(11), 3073--3085
+  (2011)
+
+\bibitem{Rabin_ssvm11}
+Rabin, J., Peyr\'{e}, G., Delon, J., Bernot, M.: Wasserstein barycenter and its
+  application to texture mixing.
+\newblock In: Scale Space and Variational Methods in Computer Vision (SSVM'11),
+  vol. 6667, pp. 435--446 (2011)
+
+\bibitem{Reinhard:2011}
+Reinhard, E., Pouli, T.: Colour spaces for colour transfer.
+\newblock In: Proceedings of the Third international conference on
+  Computational color imaging, CCIW'11, pp. 1--15. Springer-Verlag, Berlin,
+  Heidelberg (2011)
+
+\bibitem{Rubner1998}
+Rubner, Y., Tomasi, C., Guibas, L.: A metric for distributions with
+  applications to image databases.
+\newblock In: IEEE International Conference on Computer Vision (ICCV'98), pp.
+  59--66 (1998)
+
+\bibitem{Solodov-incremental}
+Solodov, M.: Incremental gradient algorithms with stepsizes bounded away from
+  zero.
+\newblock Computational Optimization and Applications \textbf{11}(1), 23--35
+  (1998)
+
+\bibitem{Villani03}
+Villani, C.: Topics in Optimal Transportation.
+\newblock Graduate Studies in Mathematics Series. American Mathematical Society
+  (2003)
+
+\end{thebibliography}

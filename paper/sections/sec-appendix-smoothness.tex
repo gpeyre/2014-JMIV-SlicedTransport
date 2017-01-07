@@ -1,0 +1,230 @@
+% !TEX encoding = ISO-8859-16
+\section{Proof of Theorem~\ref{thm-sliced-energy-grad}}
+\label{sec-proof-thm-sliced}
+
+
+\noindent\textbf{Notations.}  
+Without loss of generality, for a fixed $Y \in \RR^{d \times N}$, we study the smoothness of 
+\eq{
+	\foralls X \in \RR^{d\times N}, \quad
+	\Ee(X) = \frac{1}{2} \SWass{\RR^d}(\mu_X,\mu_Y)^2 = \int_{\Sph} \Ee_\th(X) \d x
+}
+\eq{
+	\qwhereq
+	\Ee_\th(X) = \frac{1}{2} \WassPt(X_\th,Y_\th)^2.
+}
+We have used, for $x, y \in \RR^N$, the shorthand notation
+\eq{
+	\WassPt(x,y) = \Wass{\RR}(\mu_x,\mu_y).
+}
+The result of Theorem~\ref{thm-sliced-energy-grad} then follows by summations of such functionals. 
+
+We define $\UU(N,d)$ to be vectors of $\RR^{d \times N}$ with distinct entries:
+\eq{
+	\UU(N,d) = \enscond{
+				 W = (W_1, \ldots, W_N) \in \R^{d \times N} 
+			}{
+					\foralls i \not=j,\, X_i \not= X_j
+	 		 }.
+}
+The hypothesis is that $X \in \UU(N,d)$. 
+One has 
+\eq{
+	\Ee_\th(X) = \frac{1}{2} \norm{X_\th - Y_\th \circ \si_\th }^2
+	\qwhereq
+	\si_\th = \si_X^\th \circ (\si_Y^{\th})^{-1}
+}
+is a permutation depending on both $X$ and $Y$. Note that the permutation involved are not necessarily unique, and are assumed to be arbitrary valid sorting permutations.
+
+For $X \in \RR^{N \times d}$ and $\epsilon>0$ we introduce 
+\eq{
+	\Theta_\epsilon(X) = \enscond{ \th \in \Sph}{ 
+			\foralls \normP{\de} \leq \epsilon, \quad
+			X_\th + \de_\th \in \UU(N,1)
+	}.
+}
+This is the set of directions for which any perturbation of $X$ of amplitude smaller than $\epsilon$ has a projection with disjoint points. 
+
+\medskip
+\noindent\textbf{Overview of the proof.}  
+In the following, we thus aim at proving that $\Ee$ is $C^1$, that
+\eq{
+	\tilde\nabla \Ee(X) = \int_{\Sph} \tilde \nabla \Ee_\th(X) \d\th
+	\qwhereq
+	\tilde \nabla \Ee_\th(X) = (X_\th - Y_\th \circ \si_\th) \th
+}
+is indeed equal to $\nabla \Ee(X)$, and that this gradient is Lipschitz continuous. 
+
+The general strategy of the proof is to split the integration between the directions $\th \in \Theta_\epsilon(X)$, for which we can locally assume that the permutations $\si_\th$ are constant (see Lemma~\ref{lem-permutation-unique}), which in turn defines a smooth quadratic energy, and the remaining directions in $\Theta_\epsilon(X)^c$, which are shown to have a negligible contribution to the energy and to the derivative (see Lemma~\ref{lem-volume}). 
+
+\medskip
+\noindent\textbf{Preparatory results.}  The following lemma shows that if $\th \in \Theta_\epsilon(X)$ the permutations $\si_X^\th$ are stable to small perturbations of $X$.
+
+\begin{lem}\label{lem-permutation-unique}
+	Let $X \in \UU(N,d)$.
+	For all $\th \in \Theta_\epsilon(X)$, for all $\de$ with $\normP{\de} \leq \epsilon$, the permutation 
+	$\si_{X+\de}^\th$ that sorts $( \dotp{X_i+\de_i}{\th} )_i$
+	is uniquely defined and
+	satisfies $\si_{X+\de}^\th = \si_X^\th$.
+\end{lem}
+\begin{proof}
+	If one has  $\si_{X+\de}^\th \neq \si_X^\th$, then necessarily there exists some $t \in [0,1]$ such that 
+	$\si_{X+t\de}^\th$ is not uniquely defined, which is equivalent to 
+	$X_\th+t\de_\th$ not being in $\UU(N,1)$. Since $\normP{t \de} \leq \epsilon$, this shows
+	that $\th \notin \Theta_\epsilon(X)$.
+\end{proof}
+
+In order to prove Theorem \ref{thm-sliced-energy-grad}, we need the following lemma.
+
+\begin{lem}\label{lem-volume}
+	For $X \in \UU(N, d)$, one has
+	\eql{\label{eq-control-theta}
+		\text{\upshape Vol}(\Theta_\epsilon(X)^c) = \int_{\Theta_\epsilon(X)^c} \d \th 
+		= O( \epsilon ).
+	}
+\end{lem}
+
+\begin{proof}
+	One has $X_\th + \de_\th \notin \UU(N,1)$ if and only there exists a pair of points
+	$u=X_i+\de_i$ and $v=X_j+\de_j$ with $i \neq j$ such that
+	\eq{
+		\th \in A(u,v) 
+		\qwhereq
+		A(u,v) = \enscond{\xi \in \Sph}{\dotp{\xi}{u-v}=0}
+	}	
+	Note that $A(u,v)$ is a great circle of the sphere $\SS^{d-1}$. 
+	 
+	One can thus covers $\Theta_\epsilon(X)^c$ using the union of all such circles $A(u,v)$, which shows
+	\eq{
+		\Theta_\epsilon(X)^c \subset \bigcup_{i \neq j} A_\epsilon(X_i,X_j) \qwhereq
+		A_\epsilon(x,y) = 
+		\bigcup_{ {\scriptsize \begin{matrix} \norm{u-x} \leq \epsilon	
+			\\ \norm{v-y} \leq \epsilon \end{matrix}} }
+			A(u,v)
+	}
+	Note that the geodesic distance $d$ on the sphere $\SS^{d-1}$ between two circles is equal to the angle between the normal to the planes of the circles
+	\eq{
+		d(A(u,v),A(x,y)) = \text{Angle}(u-v,x-y)
+		 = \text{Angle}(x-y + \epsilon w,x-y)
+	}
+	where $\norm{w}\leq 2$.
+	As $\epsilon \rightarrow 0$, after some computations, 
+	one has the following asymptotic decay of the angle
+	\eq{
+		\text{Angle}(x-y + \epsilon w,x-y) = O(\epsilon/\norm{x-y})
+	}
+	and thus 
+	$d(A(u,v),A(x,y)) \leq C \epsilon$ for some constant $C$. This proves that 
+	$\foralls u,v$, one has
+	\eq{
+		\choice{
+			\norm{u-x} \leq \epsilon \\
+			\norm{v-y} \leq \epsilon 
+		}
+		\qarrq	
+		A(u,v) \subset B_{C\epsilon}(x,y)
+	}
+	for some constant $C>0$, where
+	\eq{
+		B_{\epsilon}(x,y) = \enscond{ \xi \in \Sph }{ d(\xi,A(x,y)) \leq \epsilon }
+	}
+	One thus has 
+	\eq{
+		A_{\epsilon}(x,y) \subset B_{C\epsilon}(x,y).
+	}  
+	The volume of the spherical band $B_{C\epsilon}(x,y)$ of width $C\epsilon$ is proportional to $\epsilon$,
+	and thus Vol$(A_\epsilon(x,y)) = O(\epsilon)$.
+	Since $\Theta_\epsilon(X)^c$ is a finite union of such sets, one obtains the result.
+\end{proof}
+
+\noindent\textbf{Proof of continuity.} For each $\th$, the function $\Ee_\th$ is continuous as a minimum of continuous functions. The function $\Ee$ being an integral of $\Ee_\th$ on a compact set $\Sph$, it is thus continuous.
+
+\medskip
+	
+\noindent\textbf{Proof of differentiability.}  Let $\de \in \RR^{N \times d}$ and $\epsilon = \normP{\de}$. The definition of the Wasserstein distance reads
+	\eq{
+		\WassPt((X+\de)_\th,Y_\th)^2 = 
+		\norm{ (X_\th + \de_\th) \circ \si_{X+\de}^\th - Y_\th \circ \si_Y^\th }^2.
+	}	
+	For all $\th \in \Theta_\epsilon(X)$, thanks to Lemma~\ref{lem-permutation-unique}, 
+	$\si_{X+\de}^\th = \si_{X}^\th$.
+	One can thus compute the variation of the 1-D Wasserstein distance with respect to $\de$ as			
+	\begin{align}
+		\WassPt((X+\de)_\th,Y_\th)^2 &=
+		\norm{ X_\th+\de_\th - Y_\th \circ \si_\th }^2 \\
+		\label{eq-proof-appendix-1} &= \WassPt(X_\th,Y_\th)^2 + \dotpP{ \tilde\nabla \Ee_\th(X) }{ \de } + \norm{\de_\th}^2.
+	\end{align}
+	Note that the fact that $\si_Y^{\th}$ might not be uniquely defined has no impact on the value of~\eqref{eq-proof-appendix-1}.
+	One thus has 
+	\eq{
+		\Ee(X+\de)-\Ee(X) - \dotpP{\tilde\nabla \Ee(X)}{\de} = A(\de) + B(\de) + O(\normP{\de}^2)
+	}
+	where
+	\begin{align*}
+		A(\de) &= \int_{\Theta_\epsilon(X)^c} \pa{			
+			\WassPt(X_\th+\de_\th,Y_\th)^2 - \WassPt(X_\th,Y_\th)^2
+		} \d \th \\
+		\qandq
+		B(\de) &= -\int_{\Theta_\epsilon(X)^c} \dotpP{ \tilde\nabla \Ee_\th(X) }{ \de } \d \th 		
+	\end{align*}
+	Note that in the expression of $B(\de)$ the permutation $\si_\th$ involved in $\tilde\nabla \Ee_\th(X)$ is not necessary unique, and can be chosen arbitrarily. 
+	
+	One has, 
+	\eq{
+		|\dotpP{ \tilde\nabla \Ee_\th(X) }{ \de }| \leq
+		\normP{X-Y\circ\sigma^\th} \normP{\de}
+	}
+	which implies, using Lemma \ref{lem-volume}
+	\eql{\label{eq-proof-thm-1}
+		|B(\de)| \leq O( \text{Vol}(\Theta_\epsilon(X)^c) \normP{\de} )
+		= O(\normP{\de}^2) = o(\normP{\de}).
+	}
+	
+	Since $(\th,X) \mapsto \Ee_\th(X)$ is  continuous and defined on a compact set, 
+	it is uniformly continuous, and thus 
+	\eq{
+		|\WassPt(X_\th+\de_\th,Y_\th)^2 - \WassPt(X_\th,Y_\th)^2|
+		\leq C(\de)
+	}
+	where $C(\de) \rightarrow 0$ where $\de \rightarrow 0$. This shows that
+	\eql{\label{eq-proof-thm-2}
+		|A(\de)| \leq \text{Vol}(\Theta_\epsilon(X)^c) C(\de) = o(\normP{\de}).
+	}
+	
+	Putting together \eqref{eq-proof-thm-1} and \eqref{eq-proof-thm-2} leads to 
+	\eq{
+		|\Ee(X+\de)-\Ee(X) - \dotp{\tilde\nabla \Ee(X)}{\de}| =
+		 o(\normP{\de})		
+	}	
+	which shows that $\Ee$ is differentiable with $\nabla \Ee = \tilde\nabla \Ee$.
+	
+\medskip
+\noindent\textbf{Proof of Lipschitzianity of the gradient.}	
+For all $\th \in \Th_0(X)$, $\nabla \Ee_\th(X)$ is continuous and uniformly bounded, and thus $\nabla \Ee$ is continuous. One has, for $\de \in \RR^{N \times d}$, and denoting $\epsilon=\norm{\de}$, 
+	\eq{
+		\nabla \Ee(X+\de) - \nabla \Ee(X) = M( \Th_\epsilon(X) ) + M( \Th_\epsilon(X)^c ) 
+	}
+	\eq{
+		\qwhereq
+		M(U) = \int_U ( \nabla \Ee_\th(X+\de) - \nabla \Ee_\th(X) ) \d \th.	
+	}
+	One has 
+	\eq{
+		M( \Th_\epsilon(X) ) = \int_{ \Th_\epsilon(X) } \de_\th \th  \d \th
+	}
+	whereas
+	\eq{
+		M( \Th_\epsilon(X)^c ) = \int_{ \Th_\epsilon(X)^c } \de_\th \th  \d \th
+		+ \int_{ \Th_\epsilon(X)^c } ( Y \circ \tilde \si_\th - Y \circ \si_\th ) \th \d \th
+	}
+	where $\tilde \si_\th = \si_{Y_\th} \circ \si_{X_\th + \de_\th}^{-1}$.
+	Using Lemma~\eqref{lem-volume}, one has for some constant $C>0$,  $\text{\upshape Vol}(\Theta_\epsilon(X)^c) \leq C \normP{\de}$ and hence
+	\eq{
+		\normP{ \nabla \Ee(X+\de) - \nabla \Ee(X) }
+		\leq 
+		(1 + 2 C \normP{Y})\normP{\de} 
+	}
+	which shows that $\nabla \Ee$ is $(1 + 2 C \normP{Y})$-Lipschitz continuous. 
+		
+
+

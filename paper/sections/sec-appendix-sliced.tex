@@ -1,0 +1,47 @@
+\section{Proof of Section~\ref{sec-sliced-wass}} 
+\label{sec-appendix-sliced}
+
+\begin{proof}[Proof of Proposition~\ref{prop-comparison-bary}]
+	Property~\eqref{eq-comparison-1} is a re-statement of property~\eqref{eq-bary-omegad-variational}.
+	Property~\eqref{eq-comparison-2} corresponds to the change of variable $\nu = R\mu \in \Im(R)$ in~\eqref{eq-sliced-optim}, which is a bijection thanks to the injectivity of $R$, see proposition~\ref{prop-im-radon}.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop-invariance-Sliced}]
+	The proof is the same as Proposition~\ref{prop-invariance-W}, replacing the invariance~\eqref{eq-inv-wass-dist} by
+	\begin{align*}
+		\SWass{\RR^d}(\phi_{s,u} \sharp \mu_1,\phi_{s,u} \sharp \mu_2)
+		&= \Wass{\Om^d}( R( \phi_{s,u} \sharp \mu_1 ), R( \phi_{s,u} \sharp \mu_2 ) ) \\
+		&= \Wass{\Om^d}( \psi_{s,u} \sharp R( \mu_1 ),  \psi_{s,u} \sharp R( \mu_1 ) ) \\
+		&= \Wass{\Om^d}( R( \mu_1 ),  R( \mu_1 ) ) \\
+		&= \SWass{\RR^d}( \mu_1, \mu_2),
+	\end{align*}
+	where we have used the invariance~\eqref{eq-inv-wass-omd} of the Wasserstein distance on $\Om^d$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop-invariance-Sliced-bis}]
+	One has, 
+	\eq{
+		\foralls \th \in \Sph, \quad
+		P_\th \sharp \phi_{s,u} \sharp  \mu = \phi_{s,\dotp{u}{\th}} \sharp P_\th \sharp \mu.
+	}
+	Thus, for an arbitrary $\tilde \mu \in \Mm_1^+(\RR^d)$, one has
+	\begin{align*}
+		&\sum_{i\in I} \la_i \Wass{\RR}( P_\th \sharp (\phi_{s_i,u_i} \sharp \mu), P_\th \sharp \tilde\mu )^2\\
+		&\qquad = \sum_{i\in I} \la_i \Wass{\RR}( \phi_{s_i,\dotp{u_i}{\th} } \sharp (P_\th \sharp \mu), P_\th \sharp  \tilde\mu )^2 \\
+		&\qquad  \geq \sum_{i\in I} \la_i \Wass{\RR}(  \phi_{s_i,\dotp{u_i}{\th} } \sharp (P_\th \sharp \mu), \phi_{s^\star,\dotp{u^\star}{\th}} \sharp (P_\th \sharp \mu) )^2 \\
+		&\qquad = \sum_{i\in I} \la_i \Wass{\RR}(  P_\th \sharp (\phi_{s_i,u_i} \sharp \mu), P_\th \sharp (\phi_{s^\star,u^\star}  \sharp \mu) )^2 
+	\end{align*}
+	where the  inequality comes from the properties of 1-D Wasserstein barycenters. Integrating the resulting inequality with respect to $\th \in \Sph$ gives
+	\eq{
+		\sum_i \la_i \SWass{\RR^d}( \phi_{s_i,u_i} \sharp \mu, \tilde \mu )^2
+		\geq 
+		\sum_i \la_i \SWass{\RR^d}( \phi_{s_i,u_i} \sharp \mu, \phi_{s^\star,u^\star} \sharp \mu )^2.
+	}
+	This inequality is an equality if and only for almost all $\th \in \Sph$, one has
+	\eq{
+		P_\th \sharp \tilde \mu = P_\th \sharp (\phi_{s^\star,u^\star} \sharp \mu)
+	}
+	so that, using Proposition~\eqref{prop-im-radon}, this corresponds to $\tilde \mu = \phi_{s^\star,u^\star} \sharp \mu$.
+	Since the measure $\tilde\mu$ is arbitrary, this gives the desired result. 
+	This proves~\eqref{eq-prop-inv-2} in the case $\Bary{\RR^d}^S$. 
+\end{proof}

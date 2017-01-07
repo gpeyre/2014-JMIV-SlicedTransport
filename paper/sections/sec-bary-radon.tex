@@ -1,0 +1,191 @@
+% !TEX encoding = ISO-8859-16
+\section{Radon Wasserstein Barycenters}
+\label{sec-bary-radon}
+
+Proposition~\ref{prop-bary-1d} shows that it is computationally inexpensive to compute the Wasserstein barycenter of 1-D densities. It thus makes sense to seek for alternate definitions of barycenters of measures in $\RR^d$ that rely on 1-D Wasserstein distances and barycenters. This section investigates a construction based on the Radon transform.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Radon Transform of Functions}
+
+We recall below classical definitions, and refer to~\cite{Helgason-radonbook} for more details. The Radon transform is first defined on integrable functions. 
+
+\begin{defn}[Radon transform of functions]
+The Radon transform $Rf$ of $f \in \Lun(\RR^d)$ is defined as
+\eql{\label{eq-radon}
+		Rf(t,\th) = \int_{\RR^{d-1} } f(t\theta + U_\th \ga) \d \ga
+}
+where $U_\th \in \R^{d\times(d-1)}$ is any matrix such that its  columns defines an orthogonal basis of $\th^\perp$ (the hyperplane orthogonal to $\th$). 
+%  such that $\Theta = [\th, U_\th] \in \R^{d\times d}$ is an orthonormal basis of $\R^d$, {i.e.} the columns of $U_\th$ span the hyperplane $\Hh_{0,\th^{\perp}}$ which passes through the origin and is normal to $\th$.  
+This defines $R : \Lun(\RR^d) \rightarrow \Lun(\Om^d)$. 
+\end{defn}
+
+
+\if 0
+%% OLD DEF %%%
+\eq{
+	\foralls (t,\th) \in \Om^d, \quad  
+	Rf(t,\th) =
+	\int_{ \Hh_{t,\th} } f \d m_{\Hh_{t,\th}} 
+	%= {\color{red} \int_{\ga \in \R^{d-1} } f(t\theta + U_\th \ga) d\ga}
+	% \int_{ \dotp{x}{\th}=t } f(x) \d x 
+}
+\eq{
+	\qwhereq
+	\Hh_{t,\th} = \enscond{x \in \RR^d}{ \dotp{x}{\th}=t }
+}
+and $m_{\Hh_{t,\th}}$ is the Lebesgues measure on the hyperplane $\Hh_{t,\th}$.
+\fi
+
+
+Its adjoint is defined on continuous functions as follows.
+
+\begin{defn}[Back-projection operator] 
+The back projection $R^*g$ of $g \in \Cont{\Om^d}$ is defined as
+\eq{
+	R^* g(x) % = \int_{ \dotp{x}{\th}=t } g(t,\th) \d t \d \th
+	 = \int_{ \Sph } g(\dotp{x}{\th},\th) \d \th.
+}
+This defines $R^* : \Cont{\Om^d} \rightarrow \Cont{\RR^d}$. 
+\end{defn}
+
+\newcommand{\filt}{h}
+
+One has that $R^* R$ is a translation invariant operator, i.e. a convolution  
+\eq{
+	R^*R f = \filt \star f
+	\qwhereq
+	\hat\filt(\om) = c \, \norm{\om}^{-(d-1)},
+}
+where $\star$ is the convolution on $\RR^d$ and $c \in \RR$ is a normalizing constant whose exact value depends on the dimension (see~\cite{Helgason-radonbook}). This relationship suggests a definition of a pseudo-inverse transform which operates on smooth functions so as to invert the low pass filter $\filt$.
+
+\begin{defn}[Inverse Radon transform of functions] 
+The pseudo-inverse Radon transform $R^+ g$ of $g \in \Dd(\Om^d)$ is defined as
+\eql{\label{eq-pseudo-inv}
+	R^{+} g = \filt^+ \star (R^* g)
+}
+where $\filt^+$ is defined through $\hat \filt^+(\om) = c^{-1} \norm{\om}^{d-1}$.
+\end{defn}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Radon Transform of Measures}
+
+Since $R^*$ is defined on $\Cont{\RR^d}$, the Radon transform is naturally extended to measures $\mu \in \Mm(\RR^d)$ by duality as follows.
+
+\begin{defn}[Radon transform of measures]\label{defn-radon-measure} For all $\mu \in \Mm(\RR^d)$, we set $\nu=R(\mu)$ be defined through, $\foralls g \in \Cont{\Om^d}$, 
+\eql{\label{eq-radon-measure} 
+	\int_{\Om^d} g(t,\th) \d\nu(t,\th)
+	= \int_{\RR^d} (R^*g)(x) \d \mu(x).
+} 
+This defines $R : \Mm(\RR^d) \rightarrow \Mm(\Om^d)$.
+\end{defn}
+
+The following proposition shows that the Radon transform of a measure gathers projections of the input measure along all possible directions.
+
+\begin{prop}\label{prop-radon-pushforward}
+For $\mu \in \Mm(\RR^d)$, one has 
+\eq{
+	\foralls \th \in \Sph, \quad
+	R(\mu)^{\th} = P_\th \sharp \mu
+}
+\eq{
+	\qwhereq
+	P_\th : x \in \RR^d \mapsto \dotp{x}{\th} \in \RR,
+}
+and where $R(\mu)^{\th} \in \Mm(\RR)$ is defined in~\eqref{eq-desintegration}.
+\end{prop}
+
+The proof of this proposition, as well as all the other proofs of this section, can be found in Appendix~\ref{sec-appendix-radon}.
+
+
+The conditional measure $\nu^\th$ associated to $\nu \in \Mm(\Om^d)$ is defined for almost all $\th$, i.e. on a Borel set of $\th \in \Sph$ of measure 1. Proposition~\ref{prop-radon-pushforward} shows that when $\nu=R(\mu)$, then $\nu^\th$ is in fact well defined for all $\th \in \Sph$, because it is a push-forward measure. 
+
+
+\if 0
+Since $R$ is defined on $\Lun(\RR^d)$ and thus on $\Cont(\RR^d)$, it is possible to define $R^*$ on measures by duality. 
+
+\begin{defn}[Adjoint Radon transform of measures]\label{defn-adj-radon-measure} For all $\nu \in \Mm(\Om^d)$, we set $\mu=R^*(\nu)$ be defined through, $\foralls f \in \Cont{\RR^d}$, 
+\eql{\label{eq-radon-measure} 
+	\int_{\Om^d} g(t,\th) \d\nu(t,\th)
+	= \int_{\RR^d} (R^*g)(x) \d \mu(x).
+} 
+This defines $R : \Mm(\RR^d) \rightarrow \Mm(\Om^d)$.
+\end{defn}
+\fi
+
+
+We define in a way similar to Definition~\ref{defn-radon-measure} the inverse Radon transform using the operator $R^{+,*} = R (R^*R)^{-1}$.
+
+\begin{defn}[Inverse Radon transform of measures] For all $\nu \in \Mm(\Om^d)$, we set $\mu=R^+(\nu) \in \Dd^*(\RR^d)$ be defined through, $\foralls f \in \Dd(\RR^d)$, 
+\eql{\label{eq-inv-radon-measure}
+	\int_{\RR^d} f(x) \d\mu(x)
+	= \int_{\Om^d} (R^{+,*}f)(t,\th) \d \nu(t,\th).
+}
+This defines $R^+ : \Mm(\Om^d) \rightarrow \Dd^*(\RR^d)$. 
+\end{defn}
+
+Note that for an arbitrary $\nu \in \Mm(\Om^d)$ (i.e. not necessarily in the range $\Im(R)$ of $R$), $R^+\nu$ is a distribution and not necessarily a measure. One can however show that for $\nu = R(\mu) \in \Im(R)$, then $R^+(\nu)=\mu \in \Mm(\RR^d)$ is a measure, as detailed in the following proposition. The proof of this proposition can be found in~\cite{Boman-Radon}, Section~3.
+%  for more details and connections with the celebrated Cram\`er-Wold Theorem.
+
+
+\begin{prop}\label{prop-im-radon}
+	$R : \Mm(\RR^d) \rightarrow \Mm(\Om^d)$ defined in~\eqref{eq-radon-measure} is injective, and $R^+R=\Id_{\Mm(\RR^d)}$.
+\end{prop}
+
+
+The following lemma recapitulates useful commutation properties of the Radon transform with respect to translation and scaling.
+
+\begin{lem}\label{lem-invariances}
+		One has, for $\mu \in \Mm_1^+(\RR^d)$ and $\nu \in \Mm_1^+(\Om^d)$, and for all 
+		$(s,u,\Phi) \in \RR^{+,*} \times \RR^d \times \Oo(\RR^d)$, 
+		\begin{align}
+		  	\label{propR} R(\phi_{s,u}\sharp\mu) &= \psi_{s,u}\sharp R(\mu)  \\ 
+%		  	\label{propRm} R^*(\psi_{s,u}\sharp\nu) &=  s^{d-1} \cdot (\phi_{s,u}\sharp R^*(\nu)) \\
+		  	\label{propRp} R^+(\psi_{s,u}\sharp\nu) &=  \phi_{s,u}\sharp R^+(\nu) \\
+			\label{PropRot} R( \Phi \sharp \mu ) &= \tilde\Phi \sharp R(\mu).
+		\end{align}			
+\end{lem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Radon Barycenter}
+
+According to Proposition~\ref{prop-im-radon}, one has 
+\eq{
+	R : \Mm_1^+(\RR^d) \rightarrow R(\Mm_1^+(\RR^d)) \subset \bar\Mm_1^+(\Om^d),  
+}
+although the inclusion on the right hand side is not an equality. This property allows us to define the Radon barycenter.
+
+\begin{defn}[Radon barycenter]\label{defn-radon-baryc} Given $\la \in \La_I$ and $(\mu_i)_{i \in I} \in \Mm_1^+(\RR^d)^I$, we define
+\eq{
+	\Bary{\RR^d}^R(\mu_i,\la_i)_{i \in I} = 
+	R^+ \Bary{\Om^d}^W(R(\mu_i),\la_i)_{i \in I} \in \Dd^*(\RR^d).
+}
+\end{defn}
+
+Since for $\nu \in \Bary{\Om^d}^W(R(\mu_i),\la_i)_{i \in I}$ one does not have in general $\nu \in \Im(R)$, $\Bary{\RR^d}^R(\mu_i,\la_i)_{i \in I}$ is composed of distributions and not necessarily measures.
+
+
+The following proposition shows that the Radon barycenter enjoys the same invariance properties to scaling, translation and rotation as the classical Wasserstein barycenter. 
+
+
+\begin{prop}
+\label{prop:InvarianceHolds}
+	Proposition~\ref{prop-invariance-W} holds when replacing $\Bary{\RR^d}^W$ by $\Bary{\RR^d}^R$.
+\end{prop}
+
+
+
+The following proposition shows that, similarly to the usual Wassertstein barycenter, the Radon barycenter of translated and scaled copies of a given measure is also a translated and scaled copy.
+
+\begin{prop}
+\label{prop:InvarianceHoldsBis}
+	Proposition~\ref{prop-invariance-W-bis} holds when replacing $\Bary{\RR^d}^W$ by $\Bary{\RR^d}^R$.
+\end{prop}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Approximate Computation with Eulerian Discretization}
+\label{subsec-algorithm-eulerian}
+
+\input{sections/sec-bary-radon-discretization}

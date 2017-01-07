@@ -1,0 +1,20 @@
+\section{Conclusion}
+
+%\todo{J'ai enlevé le future work, a mon avis pas trop besoin d'en parler.}
+
+We introduce two novel different definitions of barycenters of multi-dimensional measures based on {one-dimensional} optimal transport. We show that these Radon and  Sliced Wasserstein Barycenters enjoy the same invariance properties as the usual Wasserstein barycenter. They both minimize variational problems, which are almost identical, up to the lack of surjectivity of the Radon transform. We estimate this deviation to be negligible on a set of examples. We introduce Lagrangian and Eulerian discretization schemes, which enable the approximation of these barycenters with fast algorithms. The computational time is orders of magnitude faster than the Wasserstein barycenter counterpart for two input measures. Furthermore, they can be applied to more than two input densities. We show on several numerical examples that, while these barycenters exhibit significant geometrical differences with respect to the Wasserstein barycenter, they appear to be very well suited to several applications in image processing and computer graphics.
+
+
+% The main drawback of these geometrical approaches is that they rely on a dense sampling of hyper-spheres, thus limiting their use in high-dimensional problems where memory becomes a bottleneck.  We further solely investigated the use of $L^2$ metrics, which are known to be non-robust to significant outliers. Exploring other cost functions, such as, for instance, {1-D} concave costs with the approach of \cite{delon-concave}, represents potential directions for future work. [citer papier SSVM'13 de Sira pour la relaxation des contraintes de masses et la regularization ?] => approximation rapide en 1D ?
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Acknowledgment}
+
+We thank Marco Cuturi for applying his method to our dataset and for sharing his results. 
+We thank Thouis R. Jones for useful feedback on our draft, and anonymous reviewers for their help in improving this paper.
+We also thank the authors of all the images used to demonstrate our color transfers.
+This work has been partially supported by NSF CGV-1111415.
+Gabriel Peyr\'e acknowledges support from the European Research Council (ERC project SIGMA-Vision).
+%\todo{Add other fundings here}

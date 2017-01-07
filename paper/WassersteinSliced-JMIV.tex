@@ -1,0 +1,88 @@
+% !TEX encoding = ISO-8859-16
+\documentclass[twocolumn]{svjour3}
+
+% Be sure to use PDF Latex, important for arxiv
+\pdfoutput=1
+
+%% JMIV Specific %%
+\smartqed  % flush right qed marks, e.g. at end of proof
+
+\usepackage[latin1]{inputenc}
+% \usepackage{amsmath,amssymb} % amsthm
+\usepackage{graphicx}
+%\usepackage{pdfsync}
+\usepackage{epsfig}
+\usepackage{epstopdf}
+\usepackage{mystyle,ulem}
+\usepackage{color}
+\usepackage{microtype}
+\usepackage{multirow}
+\usepackage{url}
+%
+\graphicspath{{./img/}}
+ % use Times fonts if available on your TeX system
+\usepackage{mathptmx}
+
+
+
+
+\title{Sliced and Radon Wasserstein Barycenters of Measures}
+
+\author{
+	Nicolas Bonneel \and Julien Rabin \and Gabriel Peyr\'e \and Hanspeter Pfister
+}
+%\authorrunning{Short form of author list} % if too long for running head
+
+\institute{N. Bonneel \at
+			  Harvard University and LIRIS-CNRS\\
+              \email{nicolas.bonneel@liris.cnrs.fr}           
+           	\and
+           	J. Rabin \at
+           	GREYC, Universit\'{e} de Caen and CNRS
+		   \and G. Peyr\'{e} \at
+		   CNRS and CEREMADE, Universit\'{e} Paris-Dauphine
+		   \and H. Pfister \at
+		   Harvard University
+}
+
+\setlength{\abovecaptionskip}{0.1cm plus2mm minus1mm}  %I'm not sure the editor will appreciate ; let's see. 
+\setlength{\belowcaptionskip}{0.3cm plus2mm minus1mm}  %I'm not sure the editor will appreciate ; let's see. (no spacing after caption is rather ugly though)
+\setlength{\floatsep}{0.3cm plus2mm minus1mm}
+\setlength{\textfloatsep}{0.3cm plus2mm minus1mm}
+\setlength{\dbltextfloatsep}{0.3cm plus2mm minus1mm}
+\setlength{\dblfloatsep}{0.3cm plus2mm minus1mm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+
+
+\begin{abstract}
+	This article details two approaches to compute barycenters of measures using {1-D} Wasserstein distances along radial projections of the input measures. The first me\-thod makes use of the Radon transform of the measures, and the second is the solution of a convex optimization problem over the space of measures. We show several properties of these barycenters and explain their relationship. We show numerical approximation schemes based on a discrete Radon transform and on the resolution of a non-convex optimization problem. We explore the respective merits and drawbacks of each approach on applications to two image processing problems: color transfer and texture mixing.   
+\keywords{Optimal transport \and Radon transform \and Wasserstein distance \and Barycenter of measures}
+\end{abstract}
+
+%\newpage\quad \newpage\input{sections/sec-appendix}\newpage
+\input{sections/sec-intro}
+\input{sections/sec-bary-wass}
+\input{sections/sec-bary-radon}
+\input{sections/sec-bary-sliced}
+\input{sections/sec-numerics}
+\input{sections/sec-conclusion}
+\appendix
+\input{sections/sec-appendix-wass}
+\input{sections/sec-appendix-radon}
+\input{sections/sec-appendix-sliced}
+\input{sections/sec-appendix-smoothness}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \bibliographystyle{plain}  
+\bibliographystyle{spmpsci}
+\bibliography{refs}	
+
+
+
+\end{document}

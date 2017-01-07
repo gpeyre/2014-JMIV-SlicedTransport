@@ -1,0 +1,128 @@
+\section{Proofs of Section~\ref{sec-bary-wass}}
+\label{sec-appendix-wass}
+
+\begin{proof}[Proof of Proposition~\ref{prop-invariance-W}]
+	From the definition~\eqref{eq-dfn-wass-dist}, one verifies that 
+	\eql{\label{eq-inv-wass-dist}
+		\Wass{\RR^d}(\phi_{s,u} \sharp \mu_1,\phi_{s,u} \sharp \mu_2)
+		= 
+		s \Wass{\RR^d}(\mu_1,\mu_2).
+	}	
+	so that
+	\begin{align*}
+		\Ee_{s,u}(\mu) &= \sum_{i \in I} \la_i \Wass{\RR^d}( \phi_{s,u} \sharp \mu_i, \mu )^2\\
+		&= s^2 \sum_{i \in I} \la_i \Wass{\RR^d}( \mu_i, \phi_{s,u}^{-1} \sharp \mu )^2
+		= s^2 \Ee_{1,0}(\tilde \mu).
+	\end{align*}
+	where we have introduced the following change of variable 
+	\eq{
+		\mu = \phi_{s,u} \sharp \tilde\mu
+		\quad\Longleftrightarrow\quad
+		\tilde \mu = \phi_{s,u}^{-1} \sharp \mu, 
+	}
+	(note that $\phi_{s,u}^{-1} = \phi_{s^{-1},-s^{-1}u}$).
+	One thus has
+	\begin{align*}
+		\uargmin{ \mu } \Ee_{s,u}(\mu) &=
+		\phi_{s,u} \sharp  \uargmin{ \tilde\mu } \Ee_{1,0}(\tilde\mu) 
+	\end{align*}
+	which proves~\eqref{eq-prop-inv-1}.
+	Property~\eqref{eq-prop-inv-rot} is proved similarly. Properties~\eqref{eq-prop-inv-rad} and~\eqref{eq-prop-inv-cent} directly follow from ~\eqref{eq-prop-inv-rot}.
+\end{proof}
+
+
+\begin{proof}[Proof of Proposition~\ref{prop-invariance-W-bis}]
+	We aim at determining $(s^\star,u^\star)$ such that 
+	\eq{
+		\mu^\star \in \Bary{\RR^d}^W(\mu_i,\la_i)_{i \in I} 
+		\qwhereq 
+		\choice{
+			\mu^\star = \phi^\star \sharp \mu, \\
+			\mu_i = \phi_i \sharp \mu, 
+		}
+	}
+	and where for simplicity we have denoted $\phi_i = \phi_{s_i,u_i}$ and $\phi^\star = \phi_{s^\star,u^\star}$.	  	
+	First, let us notice that 
+	\eq{
+		\phi_{s,u}(x) = \nabla \pa{ \frac{s}{2}\norm{x+u/s}^2 },
+	} 
+	so that the set $\Tt$ of maps of the form $\phi_{s,u}$ is a subset of gradients of convex functions.
+	This point is important since optimal maps between $\mu_i$ and $\mu^\star$ are characterized as the gradient of convex functions that push forward $\mu_i$ onto $\mu^\star$, see~\cite{Villani03}. 
+	Following~\cite{Carlier_wasserstein_barycenter}, we thus only need to show that
+	\eq{
+		\sum_{i \in I} \la_i T_i = \Id_{\RR^d} 
+		\qwhereq
+		T_i = \phi^\star \circ \phi_i^{-1}
+		= \phi_{ \tilde s_i, \tilde u_i }
+	}
+	\eq{
+		\qwhereq
+		\choice{
+			\tilde s_i = s^\star s_i^{-1} \\
+			\tilde u_i = u^{\star}-s^\star s_i^{-1} u_i
+		}
+	} 
+	since $T_i \sharp \mu_i = \mu^\star$ and $T_i \in \Tt$ is a gradient of a convex function. 
+	So that $\mu^\star$ is a barycenter if and only if
+	\begin{align*}
+		\sum_{i \in I} \la_i T_i & = \sum_{i \in I} \la_i \phi_{\tilde s_i, \tilde u_i} \\
+		& =  \phi_{\sum_{i \in I} \la_i \tilde s_i, \sum_{i \in I} \la_i \tilde u_i } 
+		= \Id_{\RR^d} = \phi_{1,0}.
+	\end{align*}
+	This in turn is equivalent to the relationships 
+	\eq{
+		\sum_{i \in I} \la_i \tilde s_i = 1
+		\qandq 
+		\sum_{i \in I} \la_i \tilde u_i  = 0, 
+	}
+	which corresponds to~\eqref{prop-invariance-W-bis-formula}. 
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop-bary-1d-pushfwd}]
+	The proof is done in~\cite{Carlier_wasserstein_barycenter} for $\mu = \mu_j$ for some $j \in I$, which is supposed to be absolutely continuous. It extends to an arbitrary measure $\mu$.
+\end{proof}
+
+
+\begin{proof}[Proof of Corollary~\ref{prop-bary-1d}]
+	When using $\mu$, the uniform and normalized measure on $[0,1]$, with the notation of Proposition~\eqref{prop-bary-1d-pushfwd}, one has $T_i = C_{\mu_i}^+$. This is indeed a classical result for 1-D optimal transport, see for instance~\cite{Carlier_wasserstein_barycenter}, Section~6.1. 	
+	One then recognizes that formula~\eqref{eq-bary-1d-formula-deriv} is the same as formula~\eqref{eq-bary-1d-pushfwd}.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop-bary-omegad-variational}] One has
+\begin{align*}
+	\nu^\star & \in \uargmin{\nu \in \bar\Mm_1^+(\Om^d)} \sum_{i \in I} \la_i \Wass{\Om^d}(\nu_i,\nu)^2  	\\
+	 & = \uargmin{\nu \in \bar\Mm_1^+(\Om^d)} \int_{\Sph} \sum_{i \in I} \la_i \Wass{\RR}( \nu_i^\th, \nu^\th )^2 \d \th.
+\end{align*}
+This is equivalent to the fact that for almost all $\th \in \Sph$, one has
+\eq{
+	\nu^{\star, \theta} \in \Bary{\RR}^W(\nu_i^\th,\la_i)_{i \in I}.
+}
+\end{proof}
+
+
+\begin{proof}[Proof of Proposition~\ref{prop-bary-omd}]
+	%%%
+	\textit{Proof of~\eqref{propBar1}.} Similarly to the proof of~\eqref{eq-prop-inv-1}, the proof of~\eqref{propBar1} is obtained by using the following invariance of the Wasserstein distance on $\Om^d$
+	\begin{align}\label{eq-inv-wass-omd}
+		\Wass{\Om^d}(  \psi_{s,u} \sharp \nu_1, \psi_{s,u} \sharp \nu_2 ) = 
+		s  \Wass{\Om^d}( \nu_1, \nu_2 ).
+	\end{align}	
+	%%%	
+	\textit{Proof of~\eqref{propBar2}.} One has that 
+	$\nu^\star \in \Bary{\Om^d}^W( \psi_{s_i,u_i} \sharp \nu, \la_i )_{i \in I}$ is equivalent to
+	\eq{
+		\text{for almost all $\th \in \Sph$},
+		%\foralls \th \in \Sph, 
+		\quad
+		(\nu^\star)^\th \in 
+		\Bary{\RR}^W( \phi_{s_i,\dotp{u_i}{\th}} \sharp \nu^\th, \la_i )_{i \in I}.
+	} 
+	Using the property of proposition~\ref{prop-invariance-W-bis} for $d=1$, one obtains that 
+	\eq{
+		\Bary{\RR}^W( \phi_{s_i,\dotp{u_i}{\th}} \sharp \nu^\th, \la_i )_{i \in I}
+		% = Julien : j'ai enlev» l'»galit»
+		\;\ni\;
+		\phi_{s^\star,\dotp{u^\star}{\th}} \sharp \nu^\th, 
+	} 
+	which gives the desired result. 	
+\end{proof}

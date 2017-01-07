@@ -1,0 +1,215 @@
+% !TEX encoding = ISO-8859-16
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Wasserstein Distance}
+\label{sec-bary-wass}
+
+
+%%
+\subsection{Optimal Transport}
+
+For $(\mu_1,\mu_2) \in \Mm_1^+(\RR^d)^2$, we define the $L^2$-Wasserstein distance $\Wass{\RR^d}(\mu_1,\mu_2)^2$ to be equal to
+\eql{\label{eq-dfn-wass-dist}
+	\inf \enscond{ 
+		\int_{\RR^d \times \RR^d} \norm{x_1-x_2}^2 \d\ga(x_1,x_2)
+	}{
+		{ \ga \in C(\mu_1,\mu_2) }
+	}
+}
+where 
+\eq{
+	C(\mu_1,\mu_2) = \enscond{ \ga \in \Mm_1^+(\RR^d \times \RR^d) }{ \Pi_i \sharp \ga = \mu_i, \;  i=1,2 }
+}
+where $\Pi_1(x_1,x_2) = x_1$ and $\Pi_2(x_1,x_2)=x_2$. We refer to~\cite{Villani03} for more details regarding optimal transport and properties of the Wasserstein distance.
+
+%%
+\subsection{Wasserstein Barycenter on $\RR^d$}
+
+
+Following~\cite{Carlier_wasserstein_barycenter}, we define the Wasserstein barycenter as a natural extension of the variational formula for barycenters in $\RR^d$.
+
+\begin{defn}[Wasserstein barycenter]\label{defn-wass-baryc} Given $\la \in \La_I$ and $(\mu_i)_{i \in I} \in \Mm_1^+(\RR^d)^I$, we define
+\eql{\label{eq-wass-bary}
+	\Bary{\RR^d}^W(\mu_i,\la_i)_{i \in I} = \uargmin{\mu \in \Mm_1^+(\RR^d)} \sum_{i \in I} \la_i \Wass{\RR^d}( \mu_i,\mu )^2.
+}
+\end{defn}
+
+Note that the variational problem is convex but it does not necessarily have a unique solution so that in general $\Bary{\RR^d}^W(\mu_i,\la_i)_{i \in I}$ is a (convex) set of measures. The solution can be shown to be unique (so that $\Bary{\RR^d}^W(\mu_i,\la_i)_{i \in I}$ is a singleton) if at least one of the $\mu_i$ does not give mass to so called ``small sets'' (sets of Hausdorff dimension strictly smaller than $d$), see~\cite{Carlier_wasserstein_barycenter}.  A typical example of non-uniqueness can be shown on two input measures, for which a barycenter can be computed from any coupling measure $\ga$ solving~\eqref{eq-dfn-wass-dist}, see~\cite{Carlier_wasserstein_barycenter}, Section~4. If the two input measures are finite sums of Dirac's masses, then~\eqref{eq-dfn-wass-dist} is a finite dimensional linear program, which in general can fail to have a unique solution. The (convex) set of solution to this linear program thus defines a set of barycenters. 
+
+
+
+
+\if 0
+
+For the sake of completeness, we recall the following Theorem of~\cite{Carlier_wasserstein_barycenter}, which shows that this barycenter can be computed as the projection in $\RR^d$ of a measure on $(\RR^d)^I$ solving a linear program. 
+
+
+\begin{thm}[\cite{Carlier_wasserstein_barycenter}]\label{thm-multimarginal-wass}
+	The solutions $\Bary{\RR^d}^W(\mu_i,\la_i)_{i \in I}$ of~\eqref{eq-wass-bary} can be written as $\be_\la \sharp \psi^\star$ 
+	where $\psi^\star \in \Mm( (\RR^d)^I )$ solves
+	\eql{\label{eq-linprog-bary-wass}
+		\umin{ \psi \in \Ga(\mu_i)_{i \in I} }
+			\int_{ (\RR^d)^I } K_\la(s) \d \psi( x ) , 
+	}
+	where the cost function is 
+	\eq{
+		\foralls x = (x_i)_{i \in I} \in \RR^I, \quad
+			K_\la(x) = \sum_{i \in I} \la_i \abs{ x_i - \be_\la(x) }^2
+	}
+	and where the marginal constraint is defined as
+	\eq{
+		\Ga(\mu_i)_{i \in I} = \enscond{ \psi \in \Mm( (\RR^d)^I )
+		}{
+			\foralls i \in I,
+			\quad 
+			\Pi_i \sharp \psi = \mu_i
+		}
+	}
+	\eq{
+		\qwhereq \foralls i \in I, \; \foralls x \in (\RR^d)^I, 
+		\quad 
+		\Pi_i(x) = x_i \in \RR^d. 
+	}
+\end{thm}
+
+\fi
+
+It is proved in~\cite{Carlier_wasserstein_barycenter} that this barycenter can be computed as the projection in $\RR^d$ of a measure on $(\RR^d)^I$ solving a linear program. This theorem shows that, in the particular case where the input measures are discrete probability measures (i.e. sums of weighted Diracs) then the barycenter measures solving~\eqref{eq-wass-bary} are discrete probability measures, which can be computed by solving a finite dimensional linear program. Note that since in this case all the input measures do give mass to small sets, then the barycenter can be non-unique for some degenerate configurations of input Diracs. Also note that solving such a high dimensional linear program is intractable for imaging applications. This is one of the main motivations to introduce alternative definitions of barycenters of measures. 
+
+The following proposition states some invariance properties of the Wasserstein barycenter with respect to translation, scaling, rotation and symmetry.
+
+\begin{prop}\label{prop-invariance-W}
+	We consider $\la \in \La_I$, $(\mu_i)_{i \in I} \in \Mm_1^+(\RR^d)^I$. 
+	For all $(s,u) \in \RR^{+,*} \times \RR^d$, 
+	\begin{align} \label{eq-prop-inv-1}
+		\Bary{\RR^d}^W(\phi_{s,u} \sharp \mu_i,\la_i)_{i \in I} & = 
+				\phi_{s,u} \sharp \Bary{\RR^d}^W(\mu_i,\la_i)_{i \in I},
+	\end{align}
+	and for all $\Phi \in \Oo(\RR^d)$, 
+	\begin{align} \label{eq-prop-inv-rot}
+		\Bary{\RR^d}^W( \Phi \sharp \mu_i,\la_i)_{i \in I} & = 
+				\Phi \sharp \Bary{\RR^d}^W(\mu_i,\la_i)_{i \in I}.
+	\end{align}	
+	In particular, one has
+	\begin{align} \label{eq-prop-inv-rad}
+		&\foralls i \in I, \mu_i \in \Rad(\RR^d) \\
+			& \Rightarrow \Bary{\RR^d}^W(\mu_i,\la_i)_{i \in I} \subset \Rad(\RR^d),
+	\end{align}
+	and also
+	\begin{align} \label{eq-prop-inv-cent}
+		&\foralls i \in I, \mu_i \in \Cent(\RR^d) \\
+			& \Rightarrow \Bary{\RR^d}^W(\mu_i,\la_i)_{i \in I} \subset \Cent(\RR^d).
+	\end{align}	
+\end{prop}
+
+The proof of this proposition, as well as all the other proofs of this section, can be found in Appendix~\ref{sec-appendix-wass}.
+The following proposition shows that the Wasserstein barycenter of translated and scaled copies of a given measure is also a translated and scaled copy.
+
+\begin{prop}\label{prop-invariance-W-bis}
+	We consider $\la \in \La_I$, $\mu  \in \Mm_1^+(\RR^d)$. 	
+	For all $(s_i,u_i)_{i \in I} \in (\RR^{+,*} \times \RR^d)^I$, 
+	\begin{align} \label{eq-prop-inv-2}			
+		\phi_{s^\star,u^\star} \sharp \mu \in \Bary{\RR^d}^W(\phi_{s_i,u_i} \sharp \mu,\la_i)_{i \in I}, 
+		 \qwhereq
+	\end{align}
+	\eql{\label{prop-invariance-W-bis-formula}
+		s^\star = \pa{\sum_{i \in I} \la_i s_i^{-1}}^{-1}
+		\qandq
+		u^\star = \frac{ \sum_{i \in I} \la_i s_i^{-1} u_i }{ \sum_{i \in I} \la_i s_i^{-1} }.
+	}
+\end{prop}
+
+
+%%
+\subsection{Wasserstein Barycenter on $\RR$}
+
+The following result shows that it is possible to compute a Wasserstein barycenter measure solving~\eqref{eq-wass-bary} in the 1-D case, with a close form expression. Note that if all the input measures contain Dirac atoms, the barycenter is not necessarily unique. 
+
+
+\begin{prop}\label{prop-bary-1d-pushfwd}
+	Let $\mu \in \Mm_1^+(\RR)$ be absolutely continuous with respect to the Lebesgue measure (i.e., such that $\mu$ has a density), and $(\mu_i)_{i \in I} \in \Mm_1^+(\RR)^I$. Denoting $T_i$ such that $T_i \sharp \mu = \mu_i$ the optimal transport between $\mu$ and $\mu_i$ (which is unique), then 
+	\eql{\label{eq-bary-1d-pushfwd}
+		\mu^\star = \pa{ \sum_{i \in I}  \la_i T_i } \sharp \mu
+	}
+	is a barycenter measure solving~\eqref{eq-wass-bary}, i.e. $\mu^\star \in \Bary{\RR}^W(\mu_i,\la_i)_{i \in I}$.
+\end{prop}
+
+
+For $\mu \in \Mm(\RR)$, we write the cumulative function as 
+\eql{\label{eq-cumulative-defn}
+	\foralls t \in \RR, \quad
+	C_\mu(t) = \mu(]-\infty,t]).
+}
+As for any non-decreasing function $f : \RR \rightarrow \RR$, one can define its pseudo inverse 
+\eql{\label{eq-cumulative-pseudoinv-defn}
+	\foralls t \in \RR, \quad
+	f^+(t) = \inf
+	\enscond{s \in \RR}{ f(s) \geq t }.
+}
+The following corollary shows that 1-D barycenters can be computed almost in closed form using inverse cumulative functions.
+
+
+\begin{cor}\label{prop-bary-1d}
+Given $(\mu_i)_{i \in I} \in \Mm_1^+(\RR)^I$, and $\la \in \La_I$. Then 
+\eql{\label{eq-bary-1d-formula-deriv}
+	\mu^\star = \frac{\d}{\d t}\pa{ \sum_{i \in I} \la_i C_{\mu_i}^+(t) }^+,
+} 
+where the derivative should be interpreted in the sense of distribution, satisfies 
+$\mu^\star \in \Bary{\RR^d}^W(\mu_i,\la_i)_{i \in I}$, i.e., is a barycenter measure.
+In particular, it satisfies
+\eq{
+	C_{\mu^\star}^+ = \sum_{i \in I} \la_i C_{\mu_i}^+.
+}
+\end{cor}
+
+
+
+%%
+\subsection{Wasserstein Barycenter on $\Om^d$}
+
+We extend 1-D Wasserstein barycenters to barycenters of measures on $\Om^d$ by essentially computing the barycenter along the $t$ variable only. For this to be feasible, we restrict our attention to measures in $\bar\Mm_1^+(\Om^d)$ having normalized conditional densities along the $t$ variable. 
+
+
+\begin{defn}[Wasserstein Barycenter on $\Om^d$]
+Given $(\nu_i)_{i \in I} \in  \bar\Mm_1^+(\Om^d)^I$ and $\la \in \La_I$, we define the barycenters as
+\eq{
+	\nu \in \Bary{\Om^d}^W(\nu_i,\la_i)_{i \in I} \in \bar\Mm_1^+(\Om^d)
+} 
+by, for almost all  $\th \in \Sph$, 
+\eq{
+	\nu^{\th} \in 
+	\Bary{\RR}^W(\nu_i^\th,\la_i)_{i \in I}.
+}
+\end{defn}
+
+Considering the following extension of the Wasserstein distance to $\bar\Mm_1^+(\Om^d)$ by integrating 1-D Wasserstein distances, $\foralls (\nu_1,\nu_2) \in \bar\Mm_1^+(\Om^d)^2$, 
+\eq{
+	\Wass{\Om^d}(\nu_1,\nu_2)^2 
+	= \int_{\Sph} \Wass{\RR}( \nu_1^\th, \nu_2^\th )^2 \d \th,
+}	
+we have the following characterization of the Wasserstein barycenter on $\Om^d$.
+
+\begin{prop}\label{prop-bary-omegad-variational}
+One has
+\eql{\label{eq-bary-omegad-variational}
+	\Bary{\Om^d}^W(\nu_i,\la_i)_{i \in I} =
+	\uargmin{\nu \in \bar\Mm_1^+(\Om^d)} 
+	\sum_{i \in I} \la_i \Wass{\Om^d}(\nu_i,\nu)^2.
+}
+\end{prop}
+
+The following proposition exposes some useful properties of barycenters in $\Om^d$.
+
+\begin{prop}\label{prop-bary-omd}
+	If $\nu \in \bar\Mm_{1}^+(\Om^d)$, then $\psi_{s,u} \sharp \nu \in \bar\Mm_{1}^+(\Om^d)$, and
+	\begin{align}
+		\label{propBar1} 
+		\Bary{\Om^d}^W(\psi_{s,u} \sharp \nu_i,\la_i)_{i \in I} &= \psi_{s,u} \sharp \Bary{\Om^d}^W(\nu_i, \la_i)_{i \in I} \\
+		\label{propBar2} 
+		\Bary{\Om^d}^W(\psi_{s_i,u_i} \sharp \nu,\la_i)_{i \in I} &= \psi_{s^\star,u^\star} \sharp \nu 
+		% \Bary{\Om^d}^W(\nu, \la_i)_{i \in I}
+	\end{align}
+	where $s^\star$ and $u^\star$ are defined in~\eqref{prop-invariance-W-bis-formula}. 
+\end{prop}
+
+
